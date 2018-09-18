@@ -2,12 +2,12 @@
 * @Author: Ximidar
 * @Date:   2018-09-02 01:37:29
 * @Last Modified by:   Ximidar
-* @Last Modified time: 2018-09-02 01:42:03
+* @Last Modified time: 2018-09-15 17:28:09
 */
 package mango_structures
 
 import(
-	"encoding/json"
+	_"encoding/json"
 )
 
 type Reply_String struct{
@@ -17,5 +17,5 @@ type Reply_String struct{
 
 type Reply_JSON struct{
 	Success bool `json:"success"`
-	JSON_Message []byte `json:"message"`
+	Message []byte `json:"message"`
 }
