@@ -2,7 +2,7 @@
 * @Author: Ximidar
 * @Date:   2018-10-14 10:56:57
 * @Last Modified by:   Ximidar
-* @Last Modified time: 2018-10-17 12:17:21
+* @Last Modified time: 2018-10-17 14:13:22
  */
 
 package file_structure_test
@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"testing"
 
-	FS "github.com/ximidar/Flotilla/data_structures/FileStructures"
+	FS "github.com/ximidar/Flotilla/DataStructures/FileStructures"
 )
 
 func TestSetup(t *testing.T) {
