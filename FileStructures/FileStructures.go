@@ -2,12 +2,18 @@
 * @Author: Ximidar
 * @Date:   2018-10-10 06:36:00
 * @Last Modified by:   Ximidar
-* @Last Modified time: 2018-10-17 12:15:51
+* @Last Modified time: 2018-10-18 15:26:36
  */
 
 package FileStructures
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+
+	"github.com/nats-io/go-nats"
+)
 
 const (
 	// Name is the name of the program to call
@@ -64,6 +70,19 @@ func NewFileAction(action string, path string) (*FileAction, error) {
 	return fa, nil
 }
 
+// NewFileActionFromMSG will construct a File action from a nats msg
+func NewFileActionFromMSG(msg *nats.Msg) (*FileAction, error) {
+	fa := new(FileAction)
+
+	err := json.Unmarshal(msg.Data, &fa)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return fa, nil
+}
+
 // SetAction will make sure a real action is taking place.
 func (fa *FileAction) SetAction(action string) error {
 	var ok bool
@@ -79,4 +98,23 @@ func (fa *FileAction) SetAction(action string) error {
 	}
 	fa.Action = action
 	return nil
+}
+
+// SendAction will use the supplied nats conn to send the File Action
+func (fa *FileAction) SendAction(nc *nats.Conn, timeout time.Duration) (reply *nats.Msg, err error) {
+
+	data, err := json.Marshal(fa)
+
+	if err != nil {
+		return nil, err
+	}
+
+	reply, err = nc.Request(fa.Action, data, timeout)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return reply, nil
+
 }
