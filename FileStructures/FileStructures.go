@@ -2,7 +2,7 @@
 * @Author: Ximidar
 * @Date:   2018-10-10 06:36:00
 * @Last Modified by:   Ximidar
-* @Last Modified time: 2018-10-18 15:26:36
+* @Last Modified time: 2018-11-22 20:31:50
  */
 
 package FileStructures
@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/nats-io/go-nats"
+	"github.com/ximidar/Flotilla/Flotilla_File_Manager/Files"
 )
 
 const (
@@ -31,19 +32,6 @@ const (
 	MoveFile = Name + "MOVE_FILE"
 	// DeleteFile will delete a file
 	DeleteFile = Name + "DELETE_FILE"
-
-	// Print Controls
-
-	// IsPrinting will query if the printer is printing or not
-	IsPrinting = Name + "IS_PRINTING"
-	// IsPaused will query if the printer is paused
-	IsPaused = Name + "IS_PAUSED"
-	// TogglePause will toggle the pause state
-	TogglePause = Name + "TOGGLE_PAUSE"
-	// StartPrint will start a print
-	StartPrint = Name + "START_PRINT"
-	// CancelPrint will cancel a print
-	CancelPrint = Name + "CANCEL_PRINT"
 
 	// Publishers
 
@@ -116,5 +104,29 @@ func (fa *FileAction) SendAction(nc *nats.Conn, timeout time.Duration) (reply *n
 	}
 
 	return reply, nil
+
+}
+
+//FSProgress is a struct for getting and setting the File Progress
+type FSProgress struct {
+	File        *Files.File
+	CurrentLine int64
+	ReadBytes   int64
+	Progress    float64
+}
+
+// NewFSProgressFromMSG will construct a FSProgress object from a received message
+func NewFSProgressFromMSG(msg *nats.Msg) (*FSProgress, error) {
+
+	// make FSP
+	fsp := new(FSProgress)
+
+	// unmarshal the data from the msg
+	err := json.Unmarshal(msg.Data, fsp)
+	if err != nil {
+		return nil, err
+	}
+
+	return fsp, nil
 
 }

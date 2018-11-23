@@ -2,7 +2,7 @@
 * @Author: Ximidar
 * @Date:   2018-09-02 01:36:21
 * @Last Modified by:   Ximidar
-* @Last Modified time: 2018-10-17 13:28:45
+* @Last Modified time: 2018-11-22 20:11:56
  */
 
 package CommStructures
@@ -25,6 +25,19 @@ const (
 	WriteComm = Name + "write_comm"
 	// GetStatus will get the current connection status
 	GetStatus = Name + "get_status"
+
+	// Print Controls
+
+	// IsPrinting will query if the printer is printing or not
+	IsPrinting = Name + "IS_PRINTING"
+	// IsPaused will query if the printer is paused
+	IsPaused = Name + "IS_PAUSED"
+	// TogglePause will toggle the pause state
+	TogglePause = Name + "TOGGLE_PAUSE"
+	// StartPrint will start a print
+	StartPrint = Name + "START_PRINT"
+	// CancelPrint will cancel a print
+	CancelPrint = Name + "CANCEL_PRINT"
 
 	// pubs
 
