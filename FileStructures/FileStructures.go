@@ -2,7 +2,7 @@
 * @Author: Ximidar
 * @Date:   2018-10-10 06:36:00
 * @Last Modified by:   Ximidar
-* @Last Modified time: 2018-11-22 20:31:50
+* @Last Modified time: 2018-12-11 16:39:16
  */
 
 package FileStructures
@@ -32,6 +32,9 @@ const (
 	MoveFile = Name + "MOVE_FILE"
 	// DeleteFile will delete a file
 	DeleteFile = Name + "DELETE_FILE"
+
+	//StreamFile will start streaming the selected file
+	StreamFile = Name + "STREAM_FILE"
 
 	// Publishers
 
@@ -75,7 +78,7 @@ func NewFileActionFromMSG(msg *nats.Msg) (*FileAction, error) {
 func (fa *FileAction) SetAction(action string) error {
 	var ok bool
 	switch action {
-	case SelectFile, GetFileStructure, AddFile, MoveFile, DeleteFile:
+	case SelectFile, GetFileStructure, AddFile, MoveFile, DeleteFile, StreamFile:
 		ok = true
 	default:
 		ok = false
